@@ -1,35 +1,27 @@
-function output(fn) {
-	return function outputFn(txt) {
-		fn(txt);
-	};
-}
+var output = console.log.bind(console);
 
-// function printIf(predicate) {
-// 	return function(msg) {
-// 		if (predicate(msg)) {
-// 			output(msg);
-// 		}
-// 	};
-// }
-
-function printIf(fn) {
-	return function when(predicate) {
-		return function(...args) {
-			if (predicate(...args)) {
-				return fn(...args);
-			}
-		}
-	}
+function printIf(predicate) {
+	return when(output)(predicate);
 }
 
 function isShortEnough(str) {
 	return str.length <= 5;
 }
 
-function not(fn) {
-	return function negated(str) {
-		return !fn(str);
+function not(predicate) {
+	return function negated(...args) {
+		return !predicate(...args);
 	}
+}
+
+function when(fn) {
+	return function(predicate){
+		return function(...args){
+			if (predicate(...args)) {
+				return fn(...args);
+			}
+		};
+	};
 }
 
 var isLongEnough = not(isShortEnough);
@@ -37,9 +29,9 @@ var isLongEnough = not(isShortEnough);
 var msg1 = "Hello";
 var msg2 = msg1 + " World";
 
-printIf(console.log.bind(console))(isShortEnough)(msg1);		// Hello
-printIf(console.log.bind(console))(isShortEnough)(msg2);
-printIf(console.log.bind(console))(isLongEnough)(msg1);
-printIf(console.log.bind(console))(isLongEnough)(msg2);		// Hello World
+printIf(isShortEnough)(msg1);		// Hello
+printIf(isShortEnough)(msg2);
+printIf(isLongEnough)(msg1);
+printIf(isLongEnough)(msg2);		// Hello World
 
 //output(console.log)('Connie Leung');
