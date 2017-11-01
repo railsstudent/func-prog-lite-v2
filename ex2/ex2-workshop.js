@@ -1,8 +1,6 @@
 var output = console.log.bind(console);
-
-function printIf(predicate) {
-	return when(output)(predicate);
-}
+var printIf = when(output);
+var isLongEnough = not(isShortEnough);
 
 function isShortEnough(str) {
 	return str.length <= 5;
@@ -23,8 +21,6 @@ function when(fn) {
 		};
 	};
 }
-
-var isLongEnough = not(isShortEnough);
 
 var msg1 = "Hello";
 var msg2 = msg1 + " World";
