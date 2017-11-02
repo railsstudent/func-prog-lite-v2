@@ -1,16 +1,12 @@
-var luckyLotteryNumbers = [];
-
 function lotteryNum() {
 	return (Math.round(Math.random() * 100) % 58) + 1;
 }
 
-//console.log(luckyLotteryNumbers);
-
-function pickNumber(){
+function pickNumber(list){
 	var newLuckyLotteryNumbers = [];
 	const num = lotteryNum();
-	for (let i = 0; i < luckyLotteryNumbers.length; i++) {
-		newLuckyLotteryNumbers.push(luckyLotteryNumbers[i]);
+	for (let i = 0; i < list.length; i++) {
+		newLuckyLotteryNumbers.push(list[i]);
 	}
 	if (newLuckyLotteryNumbers.indexOf(num) < 0) {
 		newLuckyLotteryNumbers.push(lotteryNum());
@@ -26,8 +22,10 @@ function pickNumber(){
 	return newLuckyLotteryNumbers;
 }
 
+var luckyLotteryNumbers = [];
+
 for (var i = 0; i < 6; i++) {
-	luckyLotteryNumbers = pickNumber();
+	luckyLotteryNumbers = pickNumber(Object.freeze(luckyLotteryNumbers));
 }
 
 console.log(luckyLotteryNumbers);
