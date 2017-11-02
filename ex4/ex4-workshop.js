@@ -4,21 +4,18 @@ function lotteryNum() {
 
 function pickNumber(list){
 	var newLuckyLotteryNumbers = [];
-	const num = lotteryNum();
 	for (let i = 0; i < list.length; i++) {
 		newLuckyLotteryNumbers.push(list[i]);
 	}
-	if (newLuckyLotteryNumbers.indexOf(num) < 0) {
-		newLuckyLotteryNumbers.push(lotteryNum());
-		newLuckyLotteryNumbers.sort((a, b) => {
-			if (a < b) {
-				return -1;
-			} else if (a > b) {
-				return 1;
-			}
-			return 0;
-		});
+	let num = null;
+	while (true) {
+		num = lotteryNum();
+		if (newLuckyLotteryNumbers.indexOf(num) < 0) {
+			break;
+		}
 	}
+	newLuckyLotteryNumbers.push(num);
+	newLuckyLotteryNumbers.sort((a, b) => a - b);
 	return newLuckyLotteryNumbers;
 }
 
