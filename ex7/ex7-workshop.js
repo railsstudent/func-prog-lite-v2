@@ -83,7 +83,7 @@ console.log(42 === x);
 const vals = [1, 2, 6, 7, 8, 9, 7, 2, 2, 2, 1, 1, 0];
 const uniqueVals = vals.reduce((acc, b) => {
   if (acc.indexOf(b) < 0) {
-    acc.push(b);
+    return acc.concat(b);
   }
   return acc;
 }, []);
