@@ -8,15 +8,21 @@ var filteredNums = filterObj(function(list){
 	return isOdd(listSum(list));
 },nums);
 
+console.log(filteredNums);
+
 var filteredNumsProducts = mapObj(function(list){
 	return listProduct(list);
 },filteredNums);
 
-reduceObj(function(acc,v){
+console.log(filteredNumsProducts);
+
+
+const result = reduceObj(function(acc,v){
 	return acc + v;
 },0,filteredNumsProducts);
 // 38886
 
+console.log(result);
 
 // ************************************
 
@@ -30,11 +36,24 @@ function mapObj(mapperFn,o) {
 }
 
 function filterObj(predicateFn,o) {
-	// TODO
+	var newObj = {};
+	var keys = Object.keys(o);
+	for (let key of keys) {
+			const ll = o[key];
+			if (predicateFn(ll)) {
+				newObj[key] = ll;
+			}
+	}
+	return newObj;
 }
 
 function reduceObj(reducerFn,initialValue,o) {
-	// TODO
+	var keys = Object.keys(o);
+	var values = [];
+	for (let key of keys) {
+		values = values.concat(o[key]);
+	}
+	return values.reduce(reducerFn, initialValue);
 }
 
 
