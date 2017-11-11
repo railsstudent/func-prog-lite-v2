@@ -19,6 +19,18 @@ const result = reduceObj(function(acc,v){
 
 console.log(result === 38886);
 
+const mapFilteredObj = pipe(
+	curry(filterObj)(function(list){
+		return isOdd(listSum(list));
+	}),
+	curry(mapObj)(function(list){
+		return listProduct(list);
+	})
+)(nums);
+const result2 = curry(reduceObj)(function(acc,v){
+	return acc + v;
+})(0)(mapFilteredObj);
+console.log(result2 === 38886);
 
 // ************************************
 
