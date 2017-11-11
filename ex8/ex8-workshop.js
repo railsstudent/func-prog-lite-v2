@@ -19,6 +19,20 @@ const result = reduceObj(function(acc,v){
 
 console.log(result === 38886);
 
+// My solution, did not get rid of the nameless functions
+const myResult = pipe(
+	curry(filterObj)(function(list){
+		return isOdd(listSum(list));
+	}),
+	curry(mapObj)(function(list){
+		return listProduct(list);
+	}),
+	curry(reduceObj)(function(acc,v){
+		return acc + v;
+	})(0)
+)(nums);
+console.log(myResult === 38886);
+
 // Kyle's first solution
 const result2 = pipe(
 	curry(filterObj)(compose(isOdd, listSum)),
@@ -26,6 +40,21 @@ const result2 = pipe(
 	curry(reduceObj)(sum)(0)
 )(nums);
 console.log(result2 === 38886);
+
+// Kyle's final solution that reduces list of functions by pipe
+// make filterObj and mapObj into a single functions
+// make combined function and reduceObj into a single function
+// pass nums to function returned by reduce()
+const result3 =
+[
+	curry(filterObj)(compose(isOdd, listSum)),
+	curry(mapObj)(listProduct),
+	curry(reduceObj)(sum)(0)
+]
+.reduce(binary(pipe))
+(nums);
+console.log(result3 === 38886);
+
 
 // ************************************
 
